@@ -37,3 +37,36 @@ The extension is built using vanilla JavaScript and utilizes Chrome's extension 
 Picrovllo is designed with efficiency and user experience in mind, operating seamlessly in the background without interfering with normal browsing activities. Its modular structure allows for easy maintenance and future enhancements.
 
 This tool streamlines the often tedious process of collecting image resources from the web, making it an invaluable asset for professionals and enthusiasts alike who work extensively with online visual content.
+
+## Installation Guide
+
+To add Picrovllo to your Google Chrome browser, follow these steps:
+
+1. **Download the Extension Files**: 
+   - Clone the repository or download the ZIP file containing all the extension files.
+   - If you downloaded a ZIP file, extract its contents to a folder on your computer.
+
+2. **Open Chrome Extensions Page**: 
+   - Open Google Chrome and navigate to `chrome://extensions/`
+   - Alternatively, you can access this page by clicking on the three dots menu in the top right corner of Chrome, then selecting "More tools" > "Extensions".
+
+3. **Enable Developer Mode**: 
+   - In the top right corner of the Extensions page, toggle on "Developer mode".
+
+4. **Load the Extension**: 
+   - Click on the "Load unpacked" button that appears after enabling Developer mode.
+   - Navigate to the folder containing the Picrovllo extension files and select it.
+
+5. **Verify Installation**: 
+   - Picrovllo should now appear in your list of extensions.
+   - You should see the Picrovllo icon in your Chrome toolbar.
+
+6. **Pin the Extension (Optional)**: 
+   - Click on the puzzle piece icon in the Chrome toolbar to see a list of your extensions.
+   - Find Picrovllo in this list and click the pin icon next to it to keep it visible in your toolbar for easy access.
+
+7. **Start Using Picrovllo**: 
+   - Navigate to any webpage and Picrovllo will automatically start detecting images.
+   - Click on the Picrovllo icon in your toolbar to see the number of images detected and to download the list of image links.
+
+Remember to keep your extension up to date by periodically checking for updates in the repository and repeating the installation process with the latest files.

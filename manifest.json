@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Picrovllo",
+    "version": "1.2",
+    "description": "Extract image links from web pages. Developed by rovllo studio (https://t.me/rohollah)",
+    "permissions": ["activeTab", "scripting", "downloads"],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+      }
+    },
+    "icons": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ],
+    "author": "rovllo"
+  }

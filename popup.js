@@ -1,27 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const downloadButton = document.getElementById('downloadLinks');
-    const imageCountSpan = document.getElementById('imageCount');
-  
-    // Download image links
-    downloadButton.addEventListener('click', () => {
-      chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-        chrome.tabs.sendMessage(tabs[0].id, {action: 'getImageLinks'}, (response) => {
-          if (response && response.links) {
-            const blob = new Blob([response.links.join('\n')], {type: 'text/plain'});
-            const url = URL.createObjectURL(blob);
-            chrome.downloads.download({
-              url: url,
-              filename: 'image_links.txt'
-            });
-          }
-        });
+  const copyButton = document.getElementById('copyLinks');
+  const imageCountSpan = document.getElementById('imageCount');
+
+  // Copy image links to clipboard
+  copyButton.addEventListener('click', () => {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, {action: 'getImageLinks'}, (response) => {
+        if (response && response.links) {
+          const text = response.links.join('\n');
+          navigator.clipboard.writeText(text).then(() => {
+            alert('Image links copied to clipboard!');
+          }).catch(err => {
+            console.error('Failed to copy: ', err);
+          });
+        }
       });
     });
-  
-    // Update image count
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      if (request.action === 'updateImageCount') {
-        imageCountSpan.textContent = request.count;
-      }
-    });
   });
+
+  // Update image count
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'updateImageCount') {
+      imageCountSpan.textContent = request.count;
+    }
+  });
+});

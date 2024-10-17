@@ -1,72 +1,86 @@
-# Picrovllo: Advanced Image Link Collector
+# Pinterest Image Extractor
 
-Picrovllo is a powerful Chrome extension designed to simplify the process of collecting and downloading image links from web pages. This tool is ideal for researchers, designers, and anyone who needs to quickly gather visual resources from the internet.
+## Overview
 
-## Key Features:
+Pinterest Image Extractor is a Chrome extension designed to enhance your Pinterest browsing experience by automatically extracting high-quality image links from Pinterest pages. This extension allows users to easily collect and copy links to the highest resolution images available for each pin they encounter while scrolling through Pinterest.
 
-1. **Automatic Image Detection**: Picrovllo automatically scans web pages for images as you browse, identifying all image elements regardless of their size or format.
+## Features
 
-2. **Visual Feedback**: The extension provides immediate visual feedback by placing a small green checkmark overlay on each detected image, allowing users to easily see which images have been processed.
+- Automatically detects and extracts high-quality image links from Pinterest pins
+- Displays a counter of found images on the extension icon
+- Allows users to copy all collected image links to the clipboard with a single click
+- Works seamlessly in the background as you browse Pinterest
 
-3. **Real-time Link Collection**: As images are detected, their URLs are instantly added to a collection, eliminating the need for manual link copying.
+## Installation
 
-4. **Dynamic Updating**: The extension continues to scan for new images as you scroll through a page, ensuring that even dynamically loaded content is captured.
+1. Clone this repository or download the source code.
+2. Open Google Chrome and navigate to `chrome://extensions/`.
+3. Enable "Developer mode" in the top right corner.
+4. Click "Load unpacked" and select the directory containing the extension files.
+5. The Pinterest Image Extractor icon should now appear in your Chrome toolbar.
 
-5. **One-Click Download**: With a single click, users can download a text file containing all collected image links, making it easy to save and share the results.
+## Usage
 
-6. **Live Counter**: A badge on the extension icon displays the current count of collected image links, providing at-a-glance information about the number of images found.
+1. Navigate to Pinterest (https://www.pinterest.com/).
+2. As you browse and scroll, the extension will automatically detect and extract high-quality image links.
+3. The number on the extension icon will update to show how many image links have been collected.
+4. Click on the extension icon to open the popup.
+5. In the popup, click the "Copy Image Links" button to copy all collected links to your clipboard.
+6. Paste the links wherever you need them (e.g., a text document or spreadsheet).
 
-7. **Automatic Clearing**: The link collection is automatically cleared when navigating to a new page or refreshing the current one, ensuring that each browsing session starts fresh.
+## Key Files and Their Functions
 
-## Technical Implementation:
+### `manifest.json`
 
-- **Content Script (content.js)**: Handles the core functionality of detecting images, adding visual overlays, and maintaining the collection of image links. It uses DOM manipulation to interact with the page content and MutationObserver to detect dynamically added images.
+This file contains the extension's metadata and configuration. It specifies:
 
-- **Popup Interface (popup.html and popup.js)**: Provides a simple user interface for downloading the collected links and displaying the current image count.
+- The extension's name, version, and description
+- Permissions required by the extension
+- Scripts to be injected into web pages
+- The extension's icon and popup HTML file
 
-- **Background Script (background.js)**: Manages the extension's badge text update and handles communication between different parts of the extension.
+### `content.js`
 
-- **Manifest (manifest.json)**: Defines the extension's permissions, script declarations, and metadata.
+This is the main script that runs in the context of the Pinterest web page. Its key functions include:
 
-The extension is built using vanilla JavaScript and utilizes Chrome's extension APIs, including:
+- `getLargestImageUrl(srcset)`: Parses the srcset attribute of an image to find the URL of the highest resolution version.
+- `processImage(imgElement)`: Extracts the largest image URL from a Pinterest pin and adds it to the collection.
+- `updateImageCount()`: Sends a message to the background script to update the counter on the extension icon.
+- `scanImages()`: Scans the page for new Pinterest pins and processes their images.
+- `observePins()`: Sets up an Intersection Observer to efficiently detect when new pins come into view.
 
-- `chrome.tabs` for interacting with browser tabs
-- `chrome.runtime` for message passing between different scripts
-- `chrome.downloads` for initiating file downloads
+The script also uses a `setInterval` to periodically scan for new pins, ensuring that it catches dynamically loaded content as the user scrolls.
 
-Picrovllo is designed with efficiency and user experience in mind, operating seamlessly in the background without interfering with normal browsing activities. Its modular structure allows for easy maintenance and future enhancements.
+### `popup.html` and `popup.js`
 
-This tool streamlines the often tedious process of collecting image resources from the web, making it an invaluable asset for professionals and enthusiasts alike who work extensively with online visual content.
+These files define the extension's popup interface and its functionality.
 
-## Installation Guide
+`popup.js` contains the logic for:
+- Copying collected image links to the clipboard when the user clicks the "Copy Image Links" button.
+- Updating the displayed image count in the popup.
 
-To add Picrovllo to your Google Chrome browser, follow these steps:
+### `background.js`
 
-1. **Download the Extension Files**: 
-   - Clone the repository or download the ZIP file containing all the extension files.
-   - If you downloaded a ZIP file, extract its contents to a folder on your computer.
+This script runs in the background and is responsible for:
+- Updating the badge text on the extension icon to show the current count of collected images.
+- Handling image download requests (if implemented).
 
-2. **Open Chrome Extensions Page**: 
-   - Open Google Chrome and navigate to `chrome://extensions/`
-   - Alternatively, you can access this page by clicking on the three dots menu in the top right corner of Chrome, then selecting "More tools" > "Extensions".
+## How It Works
 
-3. **Enable Developer Mode**: 
-   - In the top right corner of the Extensions page, toggle on "Developer mode".
+1. When a Pinterest page is loaded, `content.js` is injected into the page.
+2. The script starts scanning for Pinterest pins and extracting high-quality image URLs.
+3. As new pins are loaded (e.g., when scrolling), the Intersection Observer detects them, and their images are processed.
+4. Each time a new image URL is added to the collection, the count is updated on the extension icon.
+5. When the user opens the popup and clicks "Copy Image Links", all collected URLs are copied to the clipboard.
 
-4. **Load the Extension**: 
-   - Click on the "Load unpacked" button that appears after enabling Developer mode.
-   - Navigate to the folder containing the Picrovllo extension files and select it.
+## Contributing
 
-5. **Verify Installation**: 
-   - Picrovllo should now appear in your list of extensions.
-   - You should see the Picrovllo icon in your Chrome toolbar.
+Contributions to improve Pinterest Image Extractor are welcome. Please feel free to submit pull requests or create issues for bugs and feature requests.
 
-6. **Pin the Extension (Optional)**: 
-   - Click on the puzzle piece icon in the Chrome toolbar to see a list of your extensions.
-   - Find Picrovllo in this list and click the pin icon next to it to keep it visible in your toolbar for easy access.
+## License
 
-7. **Start Using Picrovllo**: 
-   - Navigate to any webpage and Picrovllo will automatically start detecting images.
-   - Click on the Picrovllo icon in your toolbar to see the number of images detected and to download the list of image links.
+[MIT License](LICENSE)
 
-Remember to keep your extension up to date by periodically checking for updates in the repository and repeating the installation process with the latest files.
+## Disclaimer
+
+This extension is not affiliated with, endorsed by, or sponsored by Pinterest. It is an independent tool created for educational purposes and personal use. Always respect Pinterest's terms of service and use this extension responsibly.
